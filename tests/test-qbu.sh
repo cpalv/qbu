@@ -2,11 +2,17 @@
 
 expect() {
 	exitcode=$?
-	[ $exitcode -ne $1 ] && echo "test failed, got $exitcode expected $1" && \
+	testname=$1
+	expected_exitcode=$2
+	if [ $exitcode -ne $expected_exitcode ]; then
+		echo "$testname failed: got $exitcode expected $expected_exitcode"
 		exit 1
+	fi
+	echo "$testname: passed"
 }
 
-../qbu.sh &>/dev/null && expect 1
-../qbu.sh ../honey.txt &>/dev/null && expect 1
+# Check if script failed successfully
+../qbu.sh &>/dev/null || expect "no args" 1
+../qbu.sh ../honey.txt &>/dev/null || expect "not a block device" 1
 
 exit 0
