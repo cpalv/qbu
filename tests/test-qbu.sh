@@ -11,8 +11,9 @@ expect() {
 	echo "$testname: passed"
 }
 
-# Check if script failed successfully
+# Check if script fails successfully
 ../qbu.sh &>/dev/null || expect "no args" 1
 ../qbu.sh ../honey.txt &>/dev/null || expect "not a block device" 1
+# A proof by oxymoron!
 
 exit 0
